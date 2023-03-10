@@ -10,3 +10,12 @@ class Account(models.Model):
 
     def __str__(self):
         return self.account_number
+    
+class UserProfile(models.Model):
+    # one userprofile only link with one user
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # refered in user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='accounts')
+    accounts = models.ManyToManyField(Account)
+
+    def __str__(self):
+        return self.user.username
