@@ -15,20 +15,11 @@ class Account(models.Model):
     # represents the class objects as a string
     def __str__(self):
         return self.account_number
+class UserProfile(models.Model):
+    # one userprofile only link with one user
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # refered in user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='accounts')
+    accounts = models.ManyToManyField(Account)
 
-# class Account():
-#     class Meta:
-#         pass
-#     def __init__(self,id,account_number,current_balance):
-#         self.id = id
-#         self.account_number = account_number
-#         self.current_balance = current_balance
-    # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='accounts')
-    # def __str__(self):
-    #     return self.account_number
-    
-    # def values(self):
-    #     # print('self.id = ',self.id)
-    #     # print('self.account_number = ',self.account_number)
-    #     # print('self.current_balance = ',self.current_balance)
-    #     return {"id":self.id,"account_number":self.account_number,"current_balance":self.current_balance}
+    def __str__(self):
+        return self.user.username
