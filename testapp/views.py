@@ -28,15 +28,27 @@ from .serializers import AccountSerializer, TransactionSerializer
 
 # add request.method == 'GET' or 'POST'
 def get_account_list(request):
-    # accounts = Account.objects.all()
-    # test data
+
+    # # Retrieve the UserProfile instance associated with the logged-in user
+    # user_profile = request.user.userprofile
+
+    # # Retrieve the related accounts using the accounts attribute of the UserProfile instance
+    # accounts = user_profile.accounts.all()
+
+    # # Serialize the accounts queryset into JSON
+    # account_list = AccountSerializer(accounts).data
+
+    # # Return the serialized account list as JSON
+    # return JsonResponse(account_list, safe=False)
+
+    # test
     accounts = Account(0,'1234567891011121',100)
     # user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
     data = AccountSerializer(accounts).data
     print("get_account_list() data: ",data)
     return JsonResponse(data)
 
-def get_transaction_list(request):
+def get_transactions(request):
     if request.method == 'GET':
         # transactions = Transaction.objects.all()
         # test data 1
@@ -59,6 +71,18 @@ def get_transaction_list(request):
         print("create_transaction() data: ",data)
         return JsonResponse(data)
 
+def get_balance(request, account_id, date):
+    # Retrieve the account object
+    account = get_object_or_404(Account, id=account_id)
+
+    # Calculate the balance of the account at the specified date
+    transactions = Transaction.objects.filter(account=account, date__lte=date)
+    balance = account.current_balance + sum(t.amount for t in transactions if t.transaction_type == 'CREDIT')
+    balance -= sum(t.amount for t in transactions if t.transaction_type == 'DEBIT')
+
+    # Return the balance as a JSON response
+    data = {'account_id': account_id, 'date': date, 'balance': balance}
+    return JsonResponse(data)
 
 # def create_transaction(request):
 #     if request.method == 'POST':
