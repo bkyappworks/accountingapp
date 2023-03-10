@@ -27,6 +27,7 @@ from .serializers import AccountSerializer, TransactionSerializer
 #     return JsonResponse(data)
 
 # add request.method == 'GET' or 'POST'
+# 1
 def get_account_list(request):
 
     # # Retrieve the UserProfile instance associated with the logged-in user
@@ -47,7 +48,7 @@ def get_account_list(request):
     data = AccountSerializer(accounts).data
     print("get_account_list() data: ",data)
     return JsonResponse(data)
-
+# 2
 def get_transactions(request):
     if request.method == 'GET':
         # transactions = Transaction.objects.all()
@@ -70,7 +71,16 @@ def get_transactions(request):
         data = TransactionSerializer(transactions).data
         print("create_transaction() data: ",data)
         return JsonResponse(data)
+# 3
+def login_user(request):
+    if request.method == 'POST':
+        pass
+    # create UserProfile
 
+    # call get_account_list()
+
+
+# 4
 def get_balance(request, account_id, date):
     # Retrieve the account object
     account = get_object_or_404(Account, id=account_id)
@@ -84,6 +94,12 @@ def get_balance(request, account_id, date):
     data = {'account_id': account_id, 'date': date, 'balance': balance}
     return JsonResponse(data)
 
+# 5
+def create_account(request):
+    if request.method == 'POST':
+        pass
+
+# 6     
 # def create_transaction(request):
 #     if request.method == 'POST':
 #         # account_id = request.POST.get('account_id')
