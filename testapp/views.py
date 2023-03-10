@@ -9,21 +9,31 @@ from .serializers import AccountSerializer, TransactionSerializer
 
 
 # Create your views here.
-def cal():
-    x = 1
-    y = 2
-    return x
+# def cal():
+#     x = 1
+#     y = 2
+#     return x
 
-def say_hello(request):
-    x = cal()
-    return HttpResponse('Hello World')
+# def say_hello(request):
+#     x = cal()
+#     return HttpResponse('Hello World')
 
-def json_view(request):
-    data = {
-        'name': 'John',
-        'age': 30,
-        'city': 'New York'
-    }
+# def json_view(request):
+#     data = {
+#         'name': 'John',
+#         'age': 30,
+#         'city': 'New York'
+#     }
+#     return JsonResponse(data)
+
+# add request.method == 'GET' or 'POST'
+def get_account_list(request):
+    # accounts = Account.objects.all()
+    # test data
+    accounts = Account(0,'1234567891011121',100)
+    # user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+    data = AccountSerializer(accounts).data
+    print("get_account_list() data: ",data)
     return JsonResponse(data)
 
 def get_transaction_list(request):
@@ -49,16 +59,6 @@ def get_transaction_list(request):
         print("create_transaction() data: ",data)
         return JsonResponse(data)
 
-
-# add request.method == 'GET' or 'POST'
-def get_account_list(request):
-    # accounts = Account.objects.all()
-    # test data
-    accounts = Account(0,'1234567891011121',100)
-    # user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
-    data = AccountSerializer(accounts).data
-    print("get_account_list() data: ",data)
-    return JsonResponse(data)
 
 # def create_transaction(request):
 #     if request.method == 'POST':
