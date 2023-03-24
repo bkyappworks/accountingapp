@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'accountingapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'accountingappdb',
+        'NAME': 'mydb',
         'USER': 'postgres',
         'PASSWORD': 'postgresforaccounting',
         'HOST': 'localhost',
@@ -136,5 +136,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
-AUTH_USER_MODEL = 'testapp.UserProfile'
+# AUTH_USER_MODEL = 'testapp.User'
 
