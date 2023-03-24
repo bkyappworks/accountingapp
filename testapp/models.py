@@ -1,25 +1,6 @@
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User, AbstractUser
-# import json
-
-# Create your models here.
-# class User(AbstractUser):
-#     pass
-
-# User._meta.get_field('email')._unique = True
-# User._meta.get_field('email').blank = False
-# User._meta.get_field('email').null = False
-
-# class MyGroup(models.Model):
-#     name = models.CharField(max_length=80, unique=True)
-#     mygroup_user = models.ManyToManyField(User, related_name='mygroup_user')
-#     # additional fields and methods here
-
-# class MyPermission(models.Model):
-#     name = models.CharField(max_length=50)
-#     mypermission_user = models.ManyToManyField(User, related_name='mypermission_user')
-#     # additional fields and methods here
 
 class Account(models.Model):
     id = models.AutoField(primary_key=True)
@@ -30,13 +11,6 @@ class Account(models.Model):
     
     def __str__(self):
         return self.account_number
-
-# class UserProfile(AbstractUser):
-#     REQUIRED_FIELDS = ['email']
-#     # one userprofile only link with one user
-#     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
-#     # refered in user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='accounts')
-#     account_set = models.ManyToManyField(Account)
 
 class Transaction(models.Model):
     id = models.AutoField(primary_key=True)
