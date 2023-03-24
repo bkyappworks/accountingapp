@@ -1,11 +1,11 @@
 from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 # import json
 
 # Create your models here.
-class Users(models.Model):
-    pass
+# class User(AbstractUser):
+#     pass
 
 class Account(models.Model):
     id = models.AutoField(primary_key=True)
@@ -36,10 +36,10 @@ class Transaction(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
 
 # class UserProfile(models.Model):
-#     # one userprofile only link with one user
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     # refered in user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='accounts')
-#     accounts = models.ManyToManyField(Account)
+    # one userprofile only link with one user
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # refered in user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='accounts')
+    # accounts = models.ManyToManyField(Account)
 
-#     def __str__(self):
-#         return self.user.username
+    # def __str__(self):
+    #     return self.user.username
