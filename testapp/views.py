@@ -65,6 +65,7 @@ def get_transactions(request):
         data = TransactionSerializer(transactions).data
         print("create_transaction() data: ",data)
         return JsonResponse(data)
+
 # 3
 def login_user(request):
     if request.method == 'POST':
@@ -97,7 +98,8 @@ if __name__ == "__main__":
     get_account_list(request)
 
 # 6     
-# def create_transaction(request):
+def create_transaction(request):
+    pass
 #     if request.method == 'POST':
 #         # account_id = request.POST.get('account_id')
 #         transaction_type = request.POST.get('transaction_type')
