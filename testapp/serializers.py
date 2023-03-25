@@ -7,7 +7,7 @@ class AccountSerializer(serializers.ModelSerializer):
         # specify which model should be serialized
         model = Account
         # which fields should be included in the serialized output
-        fields = ('id', 'account_number', 'current_balance')
+        fields = ('id', 'account_number', 'current_balance','user')
 
 # add account
 class TransactionSerializer(serializers.ModelSerializer):

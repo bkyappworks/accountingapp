@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 # from rest_framework import serializers
 from .serializers import AccountSerializer, TransactionSerializer
 
-
 # Create your views here.
 # def cal():
 #     x = 1
@@ -28,26 +27,21 @@ from .serializers import AccountSerializer, TransactionSerializer
 
 # add request.method == 'GET' or 'POST'
 # 1
-def get_account_list(request):
+def get_account_list(request = None):
+    if request.method == 'POST':
+        pass
+    # Retrieve the User instance associated with the logged-in user
+    login_user = request.user.get(id='2') # login_user = request.user
+    
+    # Retrieve the related accounts using the accounts attribute of the UserProfile instance
+    accounts = Account.objects.filter(user_id=login_user.id) # accounts = Account.objects.all(user_id=login_user.id) 
+    
+    # Serialize the accounts queryset into JSON
+    serializer = AccountSerializer(accounts, many=True).data
+    
+    # Return the serialized account list as JSON
+    return JsonResponse(serializer, safe=False)
 
-    # # Retrieve the UserProfile instance associated with the logged-in user
-    # user_profile = request.user.userprofile
-
-    # # Retrieve the related accounts using the accounts attribute of the UserProfile instance
-    # accounts = user_profile.accounts.all()
-
-    # # Serialize the accounts queryset into JSON
-    # account_list = AccountSerializer(accounts).data
-
-    # # Return the serialized account list as JSON
-    # return JsonResponse(account_list, safe=False)
-
-    # test
-    accounts = Account(0,'1234567891011121',100)
-    # user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
-    data = AccountSerializer(accounts).data
-    print("get_account_list() data: ",data)
-    return JsonResponse(data)
 # 2
 def get_transactions(request):
     if request.method == 'GET':
@@ -79,7 +73,6 @@ def login_user(request):
 
     # call get_account_list()
 
-
 # 4
 def get_balance(request, account_id, date):
     # Retrieve the account object
@@ -98,6 +91,10 @@ def get_balance(request, account_id, date):
 def create_account(request):
     if request.method == 'POST':
         pass
+
+if __name__ == "__main__":
+    request = None
+    get_account_list(request)
 
 # 6     
 # def create_transaction(request):
