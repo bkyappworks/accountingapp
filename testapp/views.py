@@ -1,12 +1,13 @@
 # request handler
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
 from django.http import JsonResponse
 from .models import Account,Transaction
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 # from rest_framework import serializers
 from .serializers import AccountSerializer, TransactionSerializer
 from django.views.decorators.csrf import csrf_exempt 
+from django.contrib.auth.hashers import check_password
 
 # Create your views here.
 # def cal():
@@ -39,7 +40,6 @@ def simple_test(request):
     serializer = AccountSerializer(accounts).data
     # Return the serialized account list as JSON
     return JsonResponse(serializer, safe=False)
-
 
 # 1 GET
 def get_accounts(request = None):
@@ -74,12 +74,25 @@ def get_transactions(request = None):
     return JsonResponse(transaction_list, safe=False)
 
 # 3 POST
+@csrf_exempt
 def login_user(request):
     if request.method == 'POST':
-        pass
-    # create UserProfile
+        username = request.POST.get('username') #request.GET['id']
+        print("username: ",username)
+        password = request.POST.get('password')
+        print("password: ",password)
+        # user = User.objects.get(username=username)
+        # why None?
+        # Postman?
+        # request.POST.get()?
 
-    # call get_account_list()
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return get_accounts(request)
+        else:
+            # return user
+            return JsonResponse({'error': 'Invalid username or password.'}, status=401)
 
 # 4 GET
 def get_balance(request, account_id, date):

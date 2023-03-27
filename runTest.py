@@ -50,11 +50,9 @@ def get_transactions(request = None):
     # Return the serialized account list as JSON
     return JsonResponse(transaction_list, safe=False)
 
-if __name__ == "__main__":
-    get_accounts()
+# if __name__ == "__main__":
+#     get_accounts()
     # get_transactions()
-
-
 
 # The following can only be run once
 
@@ -62,12 +60,15 @@ if __name__ == "__main__":
 # user1 = User.objects.create_user(username='testuser1', password='password1')
 # user2 = User.objects.create_user(username='testuser2', password='password2')
 # user3 = User.objects.create_user(username='testuser3', password='password3')
+# user123 = User.objects.create_user(username='testuser123', password='password123')
 
 # Create test accounts
 
 # Account.objects.create(account_number='1234567890', current_balance=1000.00,user = user1)
 # Account.objects.create(account_number='0987654321', current_balance=500.00,user = user1)
 # Account.objects.create(account_number='0987654322', current_balance=10.00,user = user3)
+# Account.objects.create(account_number='0987654323', current_balance=1.00,user = user123)
+
 
 # Create test transactions
 # Transaction.objects.create(date='2021-01-01', transaction_type='CREDIT', note='test', amount=100.00, account=Account.objects.get(account_number='1234567890'))
