@@ -8,28 +8,36 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'accountingapp.settings')  # <--
 django.setup()
 from django.contrib.auth.models import User
 from testapp.models import Account, Transaction
+def get_account_list(request = None):
 
-login_user = User.objects.get(id='4')
+    login_user = User.objects.get(id='2')
 
-# Retrieve the related accounts using the accounts attribute of the UserProfile instance
-# accounts = Account.objects.filter(user=login_user)
-from testapp.serializers import AccountSerializer
-from django.http import JsonResponse
-accounts = Account.objects.filter(user_id=login_user.id) 
-serializer = AccountSerializer(accounts, many=True).data
-# print(JsonResponse(serializer, safe=False)) # <JsonResponse status_code=200, "application/json">
+    # Retrieve the related accounts using the accounts attribute of the UserProfile instance
+    # accounts = Account.objects.filter(user=login_user)
+    from testapp.serializers import AccountSerializer
+    from django.http import JsonResponse
+    accounts = Account.objects.filter(user_id=login_user.id) 
 
-# # Serialize the accounts queryset into JSON
-for account in accounts:
-    account_number = account.account_number
-    print("account_number: ",account_number)
-    account_info = AccountSerializer(account).data
-    print("account_info: ",account_info)
+    # Serialize the accounts queryset into JSON
+    for account in accounts:
+        account_number = account.account_number
+        print("account_number: ",account_number)
+        account_info = AccountSerializer(account).data
+        print("account_info: ",account_info)
 
-# account_list = AccountSerializer(accounts).data
+    account_list = AccountSerializer(accounts, many=True).data
+    print("account_list: ",account_list)
 
-# # # Return the serialized account list as JSON
-# print(JsonResponse(account_list, safe=False))
+    # Return the serialized account list as JSON
+    return JsonResponse(account_list, safe=False)
+
+if __name__ == "__main__":
+    get_account_list()
+
+
+
+
+
 
 # The following can only be run once
 
