@@ -6,6 +6,7 @@ from .models import Account,Transaction
 from django.contrib.auth.models import User
 # from rest_framework import serializers
 from .serializers import AccountSerializer, TransactionSerializer
+from django.views.decorators.csrf import csrf_exempt 
 
 # Create your views here.
 # def cal():
@@ -25,13 +26,29 @@ from .serializers import AccountSerializer, TransactionSerializer
 #     }
 #     return JsonResponse(data)
 
-# add request.method == 'GET' or 'POST'
-# 1
-def get_account_list(request = None):
+# 0 test GET over http
+@csrf_exempt
+def simple_test(request):
+    print("request.GET['id'] = ",request.GET['id'])
+    # return JsonResponse({'id': 3, 'account_number': '0987654322', 'current_balance': '10.00', 'user': 4})
+    id = request.GET['id']
+    accounts = Account.objects.filter(user_id=id)
+    # print(type(accounts)) # <class 'django.db.models.query.QuerySet'>
+    print("accounts = ", accounts)
+    # Serialize the accounts queryset into JSON
+    serializer = AccountSerializer(accounts).data
+    # Return the serialized account list as JSON
+    return JsonResponse(serializer, safe=False)
+
+
+# 1 GET
+def get_accounts(request = None):
     if request.method == 'POST':
         pass
     # Retrieve the User instance associated with the logged-in user
-    login_user = request.user.get(id='2') # login_user = request.user
+    
+    login_user = request.user.id
+    # login_user = User.objects.get(id='2')
     
     # Retrieve the related accounts using the accounts attribute of the UserProfile instance
     accounts = Account.objects.filter(user_id=login_user.id) # accounts = Account.objects.all(user_id=login_user.id) 
@@ -42,31 +59,21 @@ def get_account_list(request = None):
     # Return the serialized account list as JSON
     return JsonResponse(serializer, safe=False)
 
-# 2
-def get_transactions(request):
-    if request.method == 'GET':
-        # transactions = Transaction.objects.all()
-        # test data 1
-        # transactions = Transaction.objects.create(
-        #     # account=Account(0,'1234567891011122',100),
-        #     transaction_type='DEBIT',
-        #     amount=10,
-        #     note='test transaction with account #1234567891011122',
-        #     date='2023-03-10'
-        # )
-        # test data 2
-        transactions = Transaction(
-            id = 1,
-            transaction_type='DEBIT',
-            amount=10,
-            note='test transaction with account #1234567891011122',
-            date='2023-03-10'
-        )
-        data = TransactionSerializer(transactions).data
-        print("create_transaction() data: ",data)
-        return JsonResponse(data)
+# 2 GET
+def get_transactions(request = None):
+    if request.method == 'POST':
+        pass
 
-# 3
+    transactions = Transaction.objects.filter(account_id=request.account.id) 
+    # transactions = Transaction.objects.filter(account_id='1') 
+    print("transactions: ",transactions)
+    transaction_list = TransactionSerializer(transactions, many=True).data
+    print("transaction_list: ",transaction_list)
+
+    # Return the serialized account list as JSON
+    return JsonResponse(transaction_list, safe=False)
+
+# 3 POST
 def login_user(request):
     if request.method == 'POST':
         pass
@@ -74,7 +81,7 @@ def login_user(request):
 
     # call get_account_list()
 
-# 4
+# 4 GET
 def get_balance(request, account_id, date):
     # Retrieve the account object
     account = get_object_or_404(Account, id=account_id)
@@ -88,16 +95,12 @@ def get_balance(request, account_id, date):
     data = {'account_id': account_id, 'date': date, 'balance': balance}
     return JsonResponse(data)
 
-# 5
+# 5 POST
 def create_account(request):
     if request.method == 'POST':
         pass
 
-if __name__ == "__main__":
-    request = None
-    get_account_list(request)
-
-# 6     
+# 6 POST    
 def create_transaction(request):
     pass
 #     if request.method == 'POST':

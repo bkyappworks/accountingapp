@@ -8,14 +8,22 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'accountingapp.settings')  # <--
 django.setup()
 from django.contrib.auth.models import User
 from testapp.models import Account, Transaction
-def get_account_list(request = None):
+
+from testapp.serializers import AccountSerializer, TransactionSerializer
+from django.http import JsonResponse
+
+import requests
+import json
+from django.middleware.csrf import get_token
+from django.test import RequestFactory
+
+def get_accounts(request = None):
 
     login_user = User.objects.get(id='2')
 
     # Retrieve the related accounts using the accounts attribute of the UserProfile instance
     # accounts = Account.objects.filter(user=login_user)
-    from testapp.serializers import AccountSerializer
-    from django.http import JsonResponse
+    
     accounts = Account.objects.filter(user_id=login_user.id) 
 
     # Serialize the accounts queryset into JSON
@@ -31,11 +39,20 @@ def get_account_list(request = None):
     # Return the serialized account list as JSON
     return JsonResponse(account_list, safe=False)
 
+def get_transactions(request = None):
+
+    # transactions = Transaction.objects.filter(account_id=request.account.id) 
+    transactions = Transaction.objects.filter(account_id='1') 
+    print("transactions: ",transactions)
+    transaction_list = TransactionSerializer(transactions, many=True).data
+    print("transaction_list: ",transaction_list)
+
+    # Return the serialized account list as JSON
+    return JsonResponse(transaction_list, safe=False)
+
 if __name__ == "__main__":
-    get_account_list()
-
-
-
+    # get_accounts()
+    # get_transactions()
 
 
 

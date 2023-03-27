@@ -5,8 +5,9 @@ from . import views
 urlpatterns = [
     # path('hello/',views.say_hello),
     # path('testjson/',views.json_view),
-    path('accounts/',views.get_account_list),
+    path('accounts/',views.get_accounts),
     path('transactions/',views.get_transactions),
-    path('get_balance/',views.get_balance)
+    path('simple/',views.simple_test)
+    # path('get_balance/',views.get_balance)
 ]
 
