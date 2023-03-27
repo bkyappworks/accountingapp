@@ -51,7 +51,7 @@ def get_transactions(request = None):
     return JsonResponse(transaction_list, safe=False)
 
 if __name__ == "__main__":
-    # get_accounts()
+    get_accounts()
     # get_transactions()
 
 
