@@ -52,6 +52,7 @@ def get_transactions(request = None):
 
 if __name__ == "__main__":
     # test
+    # # https://stackoverflow.com/questions/13147914/how-to-simulate-http-post-request-using-python-requests-module
         URL = 'http://127.0.0.1:8000/testapp/login/'
         payload = {
         'username': 'testuser123',

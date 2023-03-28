@@ -82,15 +82,16 @@ def login_user(request):
         username = request.POST.get('username') #request.GET['id']
         print("username: ",username)
         # why None?
-            # Postman?
-            # request.POST.get()?
+            # Postman? Y
+            # request.POST.get()? N
+            
         password = request.POST.get('password')
         print("password: ",password)
         
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return JsonResponse({'message': 'Success'})
+            return JsonResponse({'blah': 'blah'}, status=200)
             # return get_accounts(request)
         else:
             # return user
