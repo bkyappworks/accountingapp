@@ -55,8 +55,8 @@ if __name__ == "__main__":
     # # https://stackoverflow.com/questions/13147914/how-to-simulate-http-post-request-using-python-requests-module
         URL = 'http://127.0.0.1:8000/testapp/login/'
         payload = {
-        'username': 'testuser123',
-        'password': 'password123',
+        'username': 'testuser1',
+        'password': 'password1',
         'persistent': '1'  # remember me
         }
 

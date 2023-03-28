@@ -45,16 +45,16 @@ def simple_test(request):
 def get_accounts(request = None):
     if request.method == 'POST':
         pass
-    # Retrieve the User instance associated with the logged-in user
-    
-    login_user = request.user.id
-    # login_user = User.objects.get(id='2')
+    # Retrieve the User instance associated with the logged-in user    
+    cur_user = request.user
+    user_id = cur_user.id
     
     # Retrieve the related accounts using the accounts attribute of the UserProfile instance
-    accounts = Account.objects.filter(user_id=login_user.id) # accounts = Account.objects.all(user_id=login_user.id) 
+    accounts = Account.objects.filter(user_id=user_id) # accounts = Account.objects.all(user_id=login_user.id) 
     
     # Serialize the accounts queryset into JSON
     serializer = AccountSerializer(accounts, many=True).data
+    print("serializer: ",serializer)
     
     # Return the serialized account list as JSON
     return JsonResponse(serializer, safe=False)
@@ -80,19 +80,19 @@ def login_user(request):
     if request.method == 'POST':
         
         username = request.POST.get('username') #request.GET['id']
-        print("username: ",username)
+        # print("username: ",username)
         # why None?
             # Postman? Y
             # request.POST.get()? N
             
         password = request.POST.get('password')
-        print("password: ",password)
+        # print("password: ",password)
         
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return JsonResponse({'blah': 'blah'}, status=200)
-            # return get_accounts(request)
+            # return JsonResponse({'blah': 'blah'}, status=200)
+            return get_accounts(request)
         else:
             # return user
             return JsonResponse({'error': 'Invalid username or password.'}, status=401)
