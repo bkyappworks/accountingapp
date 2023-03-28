@@ -74,22 +74,24 @@ def get_transactions(request = None):
     return JsonResponse(transaction_list, safe=False)
 
 # 3 POST
+import requests
 @csrf_exempt
 def login_user(request):
     if request.method == 'POST':
+        
         username = request.POST.get('username') #request.GET['id']
         print("username: ",username)
+        # why None?
+            # Postman?
+            # request.POST.get()?
         password = request.POST.get('password')
         print("password: ",password)
-        # user = User.objects.get(username=username)
-        # why None?
-        # Postman?
-        # request.POST.get()?
-
+        
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return get_accounts(request)
+            return JsonResponse({'message': 'Success'})
+            # return get_accounts(request)
         else:
             # return user
             return JsonResponse({'error': 'Invalid username or password.'}, status=401)

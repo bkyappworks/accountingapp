@@ -50,7 +50,21 @@ def get_transactions(request = None):
     # Return the serialized account list as JSON
     return JsonResponse(transaction_list, safe=False)
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
+    # test
+        URL = 'http://127.0.0.1:8000/testapp/login/'
+        payload = {
+        'username': 'testuser123',
+        'password': 'password123',
+        'persistent': '1'  # remember me
+        }
+
+        # session = requests.session()
+        response = requests.post(URL, data=payload)
+        print("response: ",response)
+
+        # end test
+        
 #     get_accounts()
     # get_transactions()
 
