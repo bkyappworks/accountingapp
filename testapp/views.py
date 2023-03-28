@@ -41,40 +41,7 @@ def simple_test(request):
     # Return the serialized account list as JSON
     return JsonResponse(serializer, safe=False)
 
-# 1 GET
-def get_accounts(request = None):
-    if request.method == 'POST':
-        pass
-    # Retrieve the User instance associated with the logged-in user    
-    cur_user = request.user
-    user_id = cur_user.id
-    
-    # Retrieve the related accounts using the accounts attribute of the UserProfile instance
-    accounts = Account.objects.filter(user_id=user_id) # accounts = Account.objects.all(user_id=login_user.id) 
-    
-    # Serialize the accounts queryset into JSON
-    serializer = AccountSerializer(accounts, many=True).data
-    print("serializer: ",serializer)
-    
-    # Return the serialized account list as JSON
-    return JsonResponse(serializer, safe=False)
-
-# 2 GET
-def get_transactions(request = None):
-    if request.method == 'POST':
-        pass
-
-    transactions = Transaction.objects.filter(account_id=request.account.id) 
-    # transactions = Transaction.objects.filter(account_id='1') 
-    print("transactions: ",transactions)
-    transaction_list = TransactionSerializer(transactions, many=True).data
-    print("transaction_list: ",transaction_list)
-
-    # Return the serialized account list as JSON
-    return JsonResponse(transaction_list, safe=False)
-
 # 3 POST
-import requests
 @csrf_exempt
 def login_user(request):
     if request.method == 'POST':
@@ -96,6 +63,42 @@ def login_user(request):
         else:
             # return user
             return JsonResponse({'error': 'Invalid username or password.'}, status=401)
+
+# 1 GET
+@csrf_exempt
+def get_accounts(request = None):
+    if request.method == 'POST':
+        pass
+    # Retrieve the User instance associated with the logged-in user    
+    cur_user = request.user
+    user_id = cur_user.id
+    
+    # Retrieve the related accounts using the accounts attribute of the UserProfile instance
+    accounts = Account.objects.filter(user_id=user_id) # accounts = Account.objects.all(user_id=login_user.id) 
+    
+    # Serialize the accounts queryset into JSON
+    serializer = AccountSerializer(accounts, many=True).data
+    print("serializer: ",serializer)
+    
+    # Return the serialized account list as JSON
+    return JsonResponse(serializer, safe=False)
+
+# 2 GET
+@csrf_exempt
+def get_transactions(request = None):
+    if request.method == 'POST':
+        pass
+    
+    cur_account = request.account
+    account_id = cur_account.id
+    transactions = Transaction.objects.filter(account_id=account_id) 
+    # transactions = Transaction.objects.filter(account_id='1') 
+    print("transactions: ",transactions)
+    transaction_list = TransactionSerializer(transactions, many=True).data
+    print("transaction_list: ",transaction_list)
+
+    # Return the serialized account list as JSON
+    return JsonResponse(transaction_list, safe=False)
 
 # 4 GET
 def get_balance(request, account_id, date):

@@ -50,24 +50,32 @@ def get_transactions(request = None):
     # Return the serialized account list as JSON
     return JsonResponse(transaction_list, safe=False)
 
+# test User and Account 
+def test_user(request = None): 
+    # https://stackoverflow.com/questions/13147914/how-to-simulate-http-post-request-using-python-requests-module
+    URL = 'http://127.0.0.1:8000/testapp/login/'
+    payload = {
+    'username': 'testuser1',
+    'password': 'password1',
+    'persistent': '1'  # remember me
+    }
+    response = requests.post(URL, data=payload)
+    print("response: ",response)
+
+# test User and Account 
+def test_transaction(request= None):     
+    URL = 'http://127.0.0.1:8000/testapp/transactions/'
+    payload = {
+    'account_number': '1234567890',
+    'persistent': '1'  # remember me
+    }
+    response = requests.post(URL, data=payload)
+    print("response: ",response)
+
 if __name__ == "__main__":
-    # test
-    # # https://stackoverflow.com/questions/13147914/how-to-simulate-http-post-request-using-python-requests-module
-        URL = 'http://127.0.0.1:8000/testapp/login/'
-        payload = {
-        'username': 'testuser1',
-        'password': 'password1',
-        'persistent': '1'  # remember me
-        }
+    test_user()
+    # test_transaction()
 
-        # session = requests.session()
-        response = requests.post(URL, data=payload)
-        print("response: ",response)
-
-        # end test
-        
-#     get_accounts()
-    # get_transactions()
 
 # The following can only be run once
 
