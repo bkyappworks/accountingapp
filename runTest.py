@@ -13,7 +13,6 @@ from testapp.serializers import AccountSerializer, TransactionSerializer
 from django.http import JsonResponse
 
 import requests
-import json
 from django.middleware.csrf import get_token
 from django.test import RequestFactory
 

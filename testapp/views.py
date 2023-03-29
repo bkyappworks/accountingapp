@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login
 from .serializers import AccountSerializer, TransactionSerializer
 from django.views.decorators.csrf import csrf_exempt 
 from django.contrib.auth.hashers import check_password
+import json
 
 # Create your views here.
 # def cal():
@@ -44,26 +45,37 @@ def simple_test(request):
 # 3 POST
 @csrf_exempt
 def login_user(request):
+    print(request.body) # b'{"username":"testuser123","password":"password123"}'
     if request.method == 'POST':
-        
-        username = request.POST.get('username') #request.GET['id']
+        # username = request.POST.get('username') #request.GET['id']
         # print("username: ",username)
         # why None?
             # Postman? Y
             # request.POST.get()? N
-            
-        password = request.POST.get('password')
+        # why UI login return Unauthorized   
+        # password = request.POST.get('password')
         # print("password: ",password)
+
+        # change to the following to work with fetch() in UI
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        
+        username = body.get('username')
+        password = body.get('password')
+        
         
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             # return JsonResponse({'blah': 'blah'}, status=200)
+            print("SUCCESS login!!!")
             return get_accounts(request)
         else:
             # return user
+            print("FAILED login!!!")
             return JsonResponse({'error': 'Invalid username or password.'}, status=401)
-
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
 # 1 GET
 @csrf_exempt
 def get_accounts(request = None):
@@ -86,19 +98,20 @@ def get_accounts(request = None):
 # 2 GET
 @csrf_exempt
 def get_transactions(request = None):
-    if request.method == 'POST':
-        pass
+    return JsonResponse({'error': 'I made this up.'}, status=401)
+    # if request.method == 'POST':
+    #     pass
     
-    cur_account = request.account
-    account_id = cur_account.id
-    transactions = Transaction.objects.filter(account_id=account_id) 
-    # transactions = Transaction.objects.filter(account_id='1') 
-    print("transactions: ",transactions)
-    transaction_list = TransactionSerializer(transactions, many=True).data
-    print("transaction_list: ",transaction_list)
+    # cur_account = request.account
+    # account_id = cur_account.id
+    # transactions = Transaction.objects.filter(account_id=account_id) 
+    # # transactions = Transaction.objects.filter(account_id='1') 
+    # print("transactions: ",transactions)
+    # transaction_list = TransactionSerializer(transactions, many=True).data
+    # print("transaction_list: ",transaction_list)
 
-    # Return the serialized account list as JSON
-    return JsonResponse(transaction_list, safe=False)
+    # # Return the serialized account list as JSON
+    # return JsonResponse(transaction_list, safe=False)
 
 # 4 GET
 def get_balance(request, account_id, date):
