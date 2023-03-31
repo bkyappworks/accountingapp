@@ -15,4 +15,4 @@ class TransactionSerializer(serializers.ModelSerializer):
         # specify which model should be serialized
         model = Transaction
         # which fields should be included in the serialized output
-        fields = ('id', 'date', 'transaction_type','note','amount')
+        fields = ('id', 'date', 'transaction_type','note','amount','account')

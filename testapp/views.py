@@ -98,20 +98,15 @@ def get_accounts(request = None):
 # 2 GET
 @csrf_exempt
 def get_transactions(request = None):
-    return JsonResponse({'error': 'I made this up.'}, status=401)
-    # if request.method == 'POST':
-    #     pass
-    
-    # cur_account = request.account
-    # account_id = cur_account.id
-    # transactions = Transaction.objects.filter(account_id=account_id) 
-    # # transactions = Transaction.objects.filter(account_id='1') 
-    # print("transactions: ",transactions)
-    # transaction_list = TransactionSerializer(transactions, many=True).data
-    # print("transaction_list: ",transaction_list)
-
-    # # Return the serialized account list as JSON
-    # return JsonResponse(transaction_list, safe=False)
+    if request.method == 'GET':
+        account_number = request.GET.get('account')
+        print("account_number: ",account_number)
+        transactions = Transaction.objects.filter(account_id=account_number)
+        serializer = TransactionSerializer(transactions, many=True).data
+        print("transactions: ",serializer)
+        return JsonResponse(serializer, safe=False)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 # 4 GET
 def get_balance(request, account_id, date):
