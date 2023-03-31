@@ -14,8 +14,8 @@ const Transaction = ({ accountNumber }) => {
 
   return (
     <div>
-      <h1>Transaction Component</h1>
-      <p>Account Number: {accountNumber}</p>
+      <h1>Transaction </h1>
+      {/* <p>Account Number: {accountNumber}</p> */}
       <table>
         <thead>
           <tr>
