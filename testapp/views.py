@@ -45,7 +45,7 @@ def simple_test(request):
 # 3 POST
 @csrf_exempt
 def login_user(request):
-    print(request.body) # b'{"username":"testuser123","password":"password123"}'
+    # print(request.body) # b'{"username":"testuser123","password":"password123"}'
     if request.method == 'POST':
         # username = request.POST.get('username') #request.GET['id']
         # print("username: ",username)
@@ -68,11 +68,11 @@ def login_user(request):
         if user is not None:
             login(request, user)
             # return JsonResponse({'blah': 'blah'}, status=200)
-            print("SUCCESS login!!!")
+            # print("SUCCESS login!!!")
             return get_accounts(request)
         else:
             # return user
-            print("FAILED login!!!")
+            # print("FAILED login!!!")
             return JsonResponse({'error': 'Invalid username or password.'}, status=401)
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
@@ -90,7 +90,7 @@ def get_accounts(request = None):
     
     # Serialize the accounts queryset into JSON
     serializer = AccountSerializer(accounts, many=True).data
-    print("serializer: ",serializer)
+    print("accounts: ",serializer)
     
     # Return the serialized account list as JSON
     return JsonResponse(serializer, safe=False)
