@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import Test2 from './Test2';
+// import Test2 from './Test2';
+import Account from './Account';  
 
-const Test1 = () => {
+
+const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [apiData, setApiData] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -29,12 +31,12 @@ const Test1 = () => {
   };
 
   if (isSubmitted) {
-    return <Test2 apiData={apiData} />;
+    return <Account apiData={apiData} />;
   }
 
   return (
     <div>
-      <h1>Test1 Component</h1>
+      <h1>Login Component</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="username">Username:</label>
@@ -50,7 +52,7 @@ const Test1 = () => {
   );
 };
 
-export default Test1;
+export default Login;
 
 
 
