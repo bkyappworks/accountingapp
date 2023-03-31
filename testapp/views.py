@@ -7,8 +7,9 @@ from django.contrib.auth import authenticate, login
 # from rest_framework import serializers
 from .serializers import AccountSerializer, TransactionSerializer
 from django.views.decorators.csrf import csrf_exempt 
-from django.contrib.auth.hashers import check_password
 import json
+from rest_framework.response import Response
+from rest_framework import status
 
 # Create your views here.
 # def cal():
@@ -123,9 +124,22 @@ def get_balance(request, account_id, date):
     return JsonResponse(data)
 
 # 5 POST
+@csrf_exempt
 def create_account(request):
     if request.method == 'POST':
-        pass
+        # data = request.json()
+        data = json.loads(request.body)
+        print("data: ", data) 
+        # data:  {'account_number': '9322698407855138', 'current_balance': '1000.00', 'user': 1}
+        serializer = AccountSerializer(data=data)
+        if serializer.is_valid():
+            account = serializer.save()
+            response_data = {'id': account.id, 'account_number': account.account_number}
+            return JsonResponse(response_data, status=201)
+        else:
+            return JsonResponse(serializer.errors, status=400)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 # 6 POST    
 def create_transaction(request):

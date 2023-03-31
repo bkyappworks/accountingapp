@@ -1,6 +1,7 @@
 # from django.test import TestCase
 
 # Create your tests here.
+import json
 import os
 import django
 
@@ -15,6 +16,7 @@ from django.http import JsonResponse
 import requests
 from django.middleware.csrf import get_token
 from django.test import RequestFactory
+import random
 
 def get_accounts(request = None):
 
@@ -71,8 +73,25 @@ def test_transaction(request= None):
     response = requests.post(URL, data=payload)
     print("response: ",response)
 
+def test_create_account(request= None):     
+    URL = 'http://127.0.0.1:8000/testapp/create_account/'
+    account_number = str(random.randint(10**15, (10**16)-1))  # generate random 16-digit number
+    payload = {
+        'account_number': account_number,
+        'current_balance': '2000.00',
+        'user': 1
+    }
+    # convert payload data to JSON format
+    payload_json = json.dumps(payload)
+    response = requests.post(URL, data=payload_json, headers={'content-type': 'application/json'})
+    print("response: ",response)
+    # print(response.content)
+    # print(response.text)
+    # print("response: ", response.json())
+
 if __name__ == "__main__":
-    test_user()
+    test_create_account()
+    # test_user()
     # test_transaction()
 
 
