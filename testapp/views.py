@@ -29,20 +29,6 @@ from rest_framework import status
 #     }
 #     return JsonResponse(data)
 
-# 0 test GET over http
-@csrf_exempt
-def simple_test(request):
-    print("request.GET['id'] = ",request.GET['id'])
-    # return JsonResponse({'id': 3, 'account_number': '0987654322', 'current_balance': '10.00', 'user': 4})
-    id = request.GET['id']
-    accounts = Account.objects.filter(user_id=id)
-    # print(type(accounts)) # <class 'django.db.models.query.QuerySet'>
-    print("accounts = ", accounts)
-    # Serialize the accounts queryset into JSON
-    serializer = AccountSerializer(accounts).data
-    # Return the serialized account list as JSON
-    return JsonResponse(serializer, safe=False)
-
 # 3 POST
 @csrf_exempt
 def login_user(request):
@@ -127,7 +113,6 @@ def get_balance(request, account_id, date):
 @csrf_exempt
 def create_account(request):
     if request.method == 'POST':
-        # data = request.json()
         data = json.loads(request.body)
         print("data: ", data) 
         # data:  {'account_number': '9322698407855138', 'current_balance': '1000.00', 'user': 1}
@@ -141,44 +126,23 @@ def create_account(request):
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
-# 6 POST    
+# 6 POST
+@csrf_exempt    
 def create_transaction(request):
-    pass
-#     if request.method == 'POST':
-#         # account_id = request.POST.get('account_id')
-#         transaction_type = request.POST.get('transaction_type')
-#         amount = request.POST.get('amount')
-#         note = request.POST.get('note', '')
-#         date = request.POST.get('date')
-
-#         # Get the Account object
-#         # account = get_object_or_404(Account, pk=account_id)
-
-#         # Create the Transaction object
-#         transaction = Transaction.objects.create(
-#             # account=account,
-#             transaction_type=transaction_type,
-#             amount=amount,
-#             note=note,
-#             date=date
-#         )
-
-#         # Update the current_balance field of the Account model
-#         # if transaction_type == 'CREDIT':
-#         #     account.current_balance += amount
-#         # elif transaction_type == 'DEBIT':
-#         #     account.current_balance -= amount
-#         # account.save()
-
-#         # Return a JSON response
-#         # data = {
-#         #     'transaction_id': transaction.id,
-#         #     # 'account_id': account.id,
-#         #     'current_balance': account.current_balance
-#         # }
-
-#         data = TransactionSerializer(transaction).data
-#         print("create_transaction() data: ",data)
-#         return JsonResponse(data)
+    # fields = ('id', 'date', 'transaction_type','note','amount','account')
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        print("data: ", data) 
+        serializer = TransactionSerializer(data=data)
+        if serializer.is_valid():
+            transaction = serializer.save()
+            response_data = {'id': transaction.id, 'date': transaction.date, 'transaction_type': transaction.transaction_type, 
+                             'note': transaction.note, 'amount': transaction.amount}
+            return JsonResponse(response_data, status=201)
+        else:
+            return JsonResponse(serializer.errors, status=400)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    
 
 

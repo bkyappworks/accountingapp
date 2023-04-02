@@ -17,6 +17,7 @@ import requests
 from django.middleware.csrf import get_token
 from django.test import RequestFactory
 import random
+from datetime import date
 
 def get_accounts(request = None):
 
@@ -89,8 +90,26 @@ def test_create_account(request= None):
     # print(response.text)
     # print("response: ", response.json())
 
+def test_create_transaction(request= None):
+    # fields = ('id', 'date', 'transaction_type','note','amount','account')
+    URL = 'http://127.0.0.1:8000/testapp/create_transaction/'
+    today = date.today()
+    date_string = today.strftime("%Y-%m-%d")
+    payload = {
+        'date': date_string,
+        'transaction_type': 'CREDIT',
+        'note': 'test transaction',
+        'amount': '1000.00',
+        'account': 2
+    }
+    # convert payload data to JSON format
+    payload_json = json.dumps(payload)
+    response = requests.post(URL, data=payload_json, headers={'content-type': 'application/json'})
+    print("response: ",response)
+
 if __name__ == "__main__":
-    test_create_account()
+    test_create_transaction()
+    # test_create_account()
     # test_user()
     # test_transaction()
 
