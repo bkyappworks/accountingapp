@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import Test2 from './Test2';
 import Account from './Account';  
 
 
