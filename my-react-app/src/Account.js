@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import Transaction from './Transaction';
-
+// a functional component that takes in an object containing the "apiData" prop as an argument.
 const Account = ({ apiData }) => {
+  // Declares a state variable named "accountNumber" and its corresponding state update function "setAccountNumber" using the useState hook
   const [accountNumber, setAccountNumber] = useState(null);
+  // Declares a state variable named "displayTransactions" and its corresponding state update function "setDisplayTransactions" using the useState hook.
   const [displayTransactions, setDisplayTransactions] = useState(false);
-
+  // sets the "accountNumber" state to the first account ID in the "apiData" prop and sets the "displayTransactions" state to true
   const handleTransactionClick = () => {
     setAccountNumber(apiData[0].id);
     setDisplayTransactions(true);
+  };
+  // sets the "displayTransactions" state to false
+  const handleViewAccountsClick = () => {
+    setDisplayTransactions(false);
   };
 
   return apiData && !displayTransactions ? (
@@ -24,7 +30,7 @@ const Account = ({ apiData }) => {
     </div>
 
   ) : displayTransactions ? (
-    <Transaction accountNumber={accountNumber} />
+    <Transaction accountNumber={accountNumber} onViewAccountsClick={handleViewAccountsClick} />
   ) : null;
 };
 

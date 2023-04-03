@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-const Transaction = ({ accountNumber }) => {
+const Transaction = ({ accountNumber, onViewAccountsClick }) => {
   const [transactions, setTransactions] = useState([]);
-
+  // useEffect hook is called after the first render and every time accountNumber changes. 
+  // It contains an asynchronous function that fetches the transaction data from a local server using the account number as a query parameter.
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(`http://127.0.0.1:8000/testapp/transactions/?account=${accountNumber}`);
@@ -10,12 +11,12 @@ const Transaction = ({ accountNumber }) => {
       setTransactions(data);
     }
     fetchData();
-  }, [accountNumber]);
+  }, [accountNumber]); // To ensures that the effect is only triggered when the accountNumber prop changes.
 
   return (
     <div>
       <h1>Transaction </h1>
-      {/* <p>Account Number: {accountNumber}</p> */}
+      <button onClick={onViewAccountsClick}>View Accounts</button>
       <table>
         <thead>
           <tr>
@@ -43,5 +44,3 @@ const Transaction = ({ accountNumber }) => {
 };
 
 export default Transaction;
-
-// http://127.0.0.1:8000/testapp/transactions/?account=${accountNumber}
