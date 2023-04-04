@@ -77,7 +77,7 @@ def get_accounts(request = None):
     
     # Serialize the accounts queryset into JSON
     serializer = AccountSerializer(accounts, many=True).data
-    print("accounts: ",serializer)
+    print("accounts in SERVER:: ",serializer)
     
     # Return the serialized account list as JSON
     return JsonResponse(serializer, safe=False)
@@ -87,10 +87,10 @@ def get_accounts(request = None):
 def get_transactions(request = None):
     if request.method == 'GET':
         account_number = request.GET.get('account')
-        print("account_number: ",account_number)
+        print("account_id in SERVER: ",account_number)
         transactions = Transaction.objects.filter(account_id=account_number)
         serializer = TransactionSerializer(transactions, many=True).data
-        print("transactions: ",serializer)
+        print("transactions in SERVER: ",serializer)
         return JsonResponse(serializer, safe=False)
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
