@@ -39,37 +39,51 @@ const Login = () => {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-      <CssBaseline />
-        <Box
-            sx={{
-              marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-        >
-        <Typography component="h1" variant="h5">
-          GPA
-        </Typography>
+    <div>
+      <h1>Test1 Component</h1>
+      <form onSubmit={handleSubmit}>
         <div>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="username">Username:</label>
-              <input type="text" id="username" name="username" value={formData.username} onChange={handleInputChange} />
-            </div>
-            <div>
-              <label htmlFor="password">Password:</label>
-              <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} />
-            </div>
-            
-            <button type="submit">Sign In</button>
-          </form>
+          <label htmlFor="username">Username:</label>
+          <input type="text" id="username" name="username" value={formData.username} onChange={handleInputChange} />
         </div>
-        </Box>
-      </Container>
-    </ThemeProvider>
+        <div>
+          <label htmlFor="password">Password:</label>
+          <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} />
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    // <ThemeProvider theme={theme}>
+    //   <Container component="main" maxWidth="xs">
+    //   <CssBaseline />
+    //     <Box
+    //         sx={{
+    //           marginTop: 8,
+    //           display: 'flex',
+    //           flexDirection: 'column',
+    //           alignItems: 'center',
+    //         }}
+    //     >
+    //     <Typography component="h1" variant="h5">
+    //       GPA
+    //     </Typography>
+    //     <div>
+    //       <form onSubmit={handleSubmit}>
+    //         <div>
+    //           <label htmlFor="username">Username:</label>
+    //           <input type="text" id="username" name="username" value={formData.username} onChange={handleInputChange} />
+    //         </div>
+    //         <div>
+    //           <label htmlFor="password">Password:</label>
+    //           <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} />
+    //         </div>
+            
+    //         <button type="submit">Sign In</button>
+    //       </form>
+    //     </div>
+    //     </Box>
+    //   </Container>
+    // </ThemeProvider>
   );
 };
 

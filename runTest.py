@@ -80,7 +80,7 @@ def test_create_account(request= None):
     payload = {
         'account_number': account_number,
         'current_balance': '1000.00',
-        'user': 1
+        'user': 2
     }
     # convert payload data to JSON format
     payload_json = json.dumps(payload)
@@ -99,8 +99,8 @@ def test_create_transaction(request= None):
         'date': date_string,
         'transaction_type': 'CREDIT',
         'note': 'test transaction',
-        'amount': '3000.00',
-        'account': 9
+        'amount': '1000.00',
+        'account': 10
     }
     # convert payload data to JSON format
     payload_json = json.dumps(payload)
