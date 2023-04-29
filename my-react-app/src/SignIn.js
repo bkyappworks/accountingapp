@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,6 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Account from './Account';
 
 function Copyright(props) {
   return (
@@ -29,14 +31,43 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+//   const handleSubmit = (event) => {
+//     event.preventDefault();
+//     const data = new FormData(event.currentTarget);
+//     console.log({
+//       email: data.get('email'),
+//       password: data.get('password'),
+//     });
+//   };
+    const [formData, setFormData] = useState({ username: '', password: '' });
+    const [apiData, setApiData] = useState(null);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({ ...formData, [name]: value });
+    };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const response = await fetch('http://127.0.0.1:8000/testapp/login/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+        const data = await response.json();
+        console.log('API Data from Test1:', data);
+        setApiData(data);
+        setIsSubmitted(true);
+        } else {
+        console.error('Error:', response.statusText);
+        }
+    };
+
+    if (isSubmitted) {
+        return <Account apiData={apiData} />;
+      }
 
   return (
     <ThemeProvider theme={theme}>
@@ -61,10 +92,12 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              value={formData.username} 
+              onChange={handleInputChange}
               autoFocus
             />
             <TextField
@@ -75,6 +108,8 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
+              value={formData.password} 
+              onChange={handleInputChange}
               autoComplete="current-password"
             />
             <FormControlLabel
