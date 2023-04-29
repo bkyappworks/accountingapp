@@ -79,7 +79,7 @@ def test_create_account(request= None):
     account_number = str(random.randint(10**15, (10**16)-1))  # generate random 16-digit number
     payload = {
         'account_number': account_number,
-        'current_balance': '1000.00',
+        'current_balance': '2000.00',
         'user': 1
     }
     # convert payload data to JSON format
@@ -99,8 +99,8 @@ def test_create_transaction(request= None):
         'date': date_string,
         'transaction_type': 'CREDIT',
         'note': 'test transaction',
-        'amount': '3000.00',
-        'account': 9
+        'amount': '1000.00',
+        'account': 2
     }
     # convert payload data to JSON format
     payload_json = json.dumps(payload)

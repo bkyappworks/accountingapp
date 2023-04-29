@@ -10,7 +10,6 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from rest_framework.response import Response
 from rest_framework import status
-from django.db import transaction
 
 # Create your views here.
 # def cal():
@@ -130,41 +129,20 @@ def create_account(request):
 # 6 POST
 @csrf_exempt    
 def create_transaction(request):
+    # fields = ('id', 'date', 'transaction_type','note','amount','account')
     if request.method == 'POST':
         data = json.loads(request.body)
         print("data: ", data) 
         serializer = TransactionSerializer(data=data)
         if serializer.is_valid():
-            with transaction.atomic():
-                transactions = serializer.save()
-                # Update current_balance based on transaction_type
-                if transactions.transaction_type == 'CREDIT':
-                    transactions.account.current_balance += transactions.amount
-                elif transactions.transaction_type == 'DEBIT':
-                    transactions.account.current_balance -= transactions.amount
-                transactions.account.save()
-                
-                response_data = {'id': transactions.id, 'date': transactions.date, 'transaction_type': transactions.transaction_type, 
-                                 'note': transactions.note, 'amount': transactions.amount}
-                return JsonResponse(response_data, status=201)
+            transaction = serializer.save()
+            response_data = {'id': transaction.id, 'date': transaction.date, 'transaction_type': transaction.transaction_type, 
+                             'note': transaction.note, 'amount': transaction.amount}
+            return JsonResponse(response_data, status=201)
         else:
             return JsonResponse(serializer.errors, status=400)
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
-    # fields = ('id', 'date', 'transaction_type','note','amount','account')
-    # if request.method == 'POST':
-    #     data = json.loads(request.body)
-    #     print("data: ", data) 
-    #     serializer = TransactionSerializer(data=data)
-    #     if serializer.is_valid():
-    #         transaction = serializer.save()
-    #         response_data = {'id': transaction.id, 'date': transaction.date, 'transaction_type': transaction.transaction_type, 
-    #                          'note': transaction.note, 'amount': transaction.amount}
-    #         return JsonResponse(response_data, status=201)
-    #     else:
-    #         return JsonResponse(serializer.errors, status=400)
-    # else:
-    #     return JsonResponse({'error': 'Method not allowed'}, status=405)
     
 
 
