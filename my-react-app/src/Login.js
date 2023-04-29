@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 import Account from './Account';  
-import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
-const theme = createTheme();
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [apiData, setApiData] = useState(null);
@@ -53,37 +47,6 @@ const Login = () => {
         <button type="submit">Submit</button>
       </form>
     </div>
-    // <ThemeProvider theme={theme}>
-    //   <Container component="main" maxWidth="xs">
-    //   <CssBaseline />
-    //     <Box
-    //         sx={{
-    //           marginTop: 8,
-    //           display: 'flex',
-    //           flexDirection: 'column',
-    //           alignItems: 'center',
-    //         }}
-    //     >
-    //     <Typography component="h1" variant="h5">
-    //       GPA
-    //     </Typography>
-    //     <div>
-    //       <form onSubmit={handleSubmit}>
-    //         <div>
-    //           <label htmlFor="username">Username:</label>
-    //           <input type="text" id="username" name="username" value={formData.username} onChange={handleInputChange} />
-    //         </div>
-    //         <div>
-    //           <label htmlFor="password">Password:</label>
-    //           <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} />
-    //         </div>
-            
-    //         <button type="submit">Sign In</button>
-    //       </form>
-    //     </div>
-    //     </Box>
-    //   </Container>
-    // </ThemeProvider>
   );
 };
 
