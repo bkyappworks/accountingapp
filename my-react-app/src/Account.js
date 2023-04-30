@@ -5,6 +5,11 @@ import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Drawer from '@mui/material/Drawer';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
 
 // a functional component that takes in an object containing the "apiData" prop as an argument.
 const Account = ({ apiData }) => {
@@ -43,6 +48,34 @@ const Account = ({ apiData }) => {
     <div>
   <Container maxWidth="md" component="main">
     <div>
+    <Drawer variant="permanent">
+          <Toolbar
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              px: [1],
+            }}
+          >
+            {/* <IconButton onClick={toggleDrawer}>
+              <ChevronLeftIcon />
+            </IconButton> */}
+          </Toolbar>
+          {/* <Divider /> */}
+          <List component="nav">
+          <ListItemButton 
+            sx = {{
+              border: '1px solid black'
+            }}>
+            <ListItemText primary="View Accounts" />
+          </ListItemButton>
+          <ListItemButton sx = {{
+              border: '1px solid black'
+            }}>
+            <ListItemText primary="View Transactions" />
+          </ListItemButton>
+          </List>
+        </Drawer>
       <h1>Accounts</h1>
       <Grid container spacing={5} alignItems="flex-end">
         {apiData.map(account => (
@@ -60,6 +93,7 @@ const Account = ({ apiData }) => {
             <CardContent>
               <div key={account.id}>
                 <h2>Account Number</h2>
+                {/* <p>{account.user}</p> */}
                 <p>{account.account_number}</p>
                 <p>Current Balance</p>
                 <p align= 'right'> ${account.current_balance} </p>
