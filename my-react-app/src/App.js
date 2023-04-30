@@ -1,7 +1,5 @@
 import './App.css';
 import SignIn from './SignIn';
-import Deposits from './Deposits';
-import Dashboard from './Dashboard';
 import Transaction from './Transaction';
 import Account from './Account';
 import Login from './Login';
