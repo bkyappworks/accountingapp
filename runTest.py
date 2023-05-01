@@ -98,8 +98,8 @@ def test_create_transaction(request= None):
     payload = {
         'date': date_string,
         'transaction_type': 'CREDIT',
-        'note': 'test transaction',
-        'amount': '15.00',
+        'note': 'test +30',
+        'amount': '30.00',
         'account': 11
     }
     # convert payload data to JSON format

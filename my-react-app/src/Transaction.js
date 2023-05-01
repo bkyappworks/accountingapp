@@ -1,4 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Drawer from '@mui/material/Drawer';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
 
 const Transaction = ({ accountNumber, onViewAccountsClick }) => {
   const [transactions, setTransactions] = useState([]);
@@ -15,9 +30,41 @@ const Transaction = ({ accountNumber, onViewAccountsClick }) => {
 
   return (
     <div>
-      <h1>Transaction </h1>
-      <button onClick={onViewAccountsClick}>View Accounts</button>
-      <table>
+      <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <Drawer variant="permanent">
+          <Toolbar
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              px: [1],
+            }}
+          >
+          </Toolbar>
+          <List component="nav">
+          <ListItemButton 
+            sx = {{
+              border: '1px solid black'
+            }}
+            onClick={onViewAccountsClick}
+            >
+            <ListItemText primary="View Accounts" />
+          </ListItemButton>
+          <ListItemButton sx = {{
+              border: '1px solid black'
+            }}>
+            <ListItemText primary="View Transactions" />
+          </ListItemButton>
+          </List>
+      </Drawer>
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      {/* <h1>Transaction </h1> */}
+      <Grid item xs={12}>
+      <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>      
+      <React.Fragment>
+      {/* <button onClick={onViewAccountsClick}>View Accounts</button> */}
+      {/* <table>
         <thead>
           <tr>
             <th>ID</th>
@@ -38,7 +85,34 @@ const Transaction = ({ accountNumber, onViewAccountsClick }) => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
+      <Table size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell>ID</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell>Transaction Type</TableCell>
+            <TableCell>Note</TableCell>
+            <TableCell>Amount</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {transactions.map((row) => (
+            <TableRow key={row.id}>
+              <TableCell>{row.id}</TableCell>
+              <TableCell>{row.date}</TableCell>
+              <TableCell>{row.transaction_type}</TableCell>
+              <TableCell>{row.note}</TableCell>
+              <TableCell>{`$${row.amount}`}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      </React.Fragment>
+      </Paper>
+      </Grid>
+      </Container>
+      </Box>
     </div>
   );
 };
