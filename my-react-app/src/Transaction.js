@@ -14,8 +14,9 @@ import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
 
-const Transaction = ({ accountNumber, onViewAccountsClick }) => {
+const Transaction = ({ accountNumber, onViewAccountsClick, selectedButton}) => {
   const [transactions, setTransactions] = useState([]);
   // useEffect hook is called after the first render and every time accountNumber changes. 
   // It contains an asynchronous function that fetches the transaction data from a local server using the account number as a query parameter.
@@ -42,50 +43,35 @@ const Transaction = ({ accountNumber, onViewAccountsClick }) => {
             }}
           >
           </Toolbar>
+          
           <List component="nav">
           <ListItemButton 
-            sx = {{
-              border: '1px solid black'
+            onClick={() => onViewAccountsClick(0)}
+            sx={{
+              backgroundColor: selectedButton === 0 ? 'royalblue' : 'gainsboro',
+              borderRadius: '10px'
             }}
-            onClick={onViewAccountsClick}
             >
-            <ListItemText primary="View Accounts" />
+            <ListItemText primary="View Accounts" aligh="center"/>
           </ListItemButton>
-          <ListItemButton sx = {{
-              border: '1px solid black'
-            }}>
-            <ListItemText primary="View Transactions" />
+          <Divider sx={{ my: 1 }} />
+          <ListItemButton 
+          onClick={() => onViewAccountsClick(1)}
+            sx={{
+              backgroundColor: selectedButton === 1 ? 'royalblue' : 'gainsboro',
+              borderRadius: '10px'
+            }}
+          >
+            <ListItemText primary="View Transactions" aligh="center"/>
           </ListItemButton>
           </List>
+
       </Drawer>
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       {/* <h1>Transaction </h1> */}
       <Grid item xs={12}>
       <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>      
       <React.Fragment>
-      {/* <button onClick={onViewAccountsClick}>View Accounts</button> */}
-      {/* <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Date</th>
-            <th>Transaction Type</th>
-            <th>Note</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.map((transaction) => (
-            <tr key={transaction.id}>
-              <td>{transaction.id}</td>
-              <td>{transaction.date}</td>
-              <td>{transaction.transaction_type}</td>
-              <td>{transaction.note}</td>
-              <td>{transaction.amount}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
       <Table size="small">
         <TableHead>
           <TableRow>

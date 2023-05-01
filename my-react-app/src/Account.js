@@ -19,33 +19,21 @@ const Account = ({ apiData }) => {
   // Declares a state variable named "displayTransactions" and its corresponding state update function "setDisplayTransactions" using the useState hook.
   const [displayTransactions, setDisplayTransactions] = useState(false);
   // sets the "accountNumber" state to the first account ID in the "apiData" prop and sets the "displayTransactions" state to true
-  const handleTransactionClick = (accountId) => {
+  const handleTransactionClick = (accountId, buttonIndex) => {
     // setAccountNumber(apiData[0].id);
     setAccountNumber(accountId)
     setDisplayTransactions(true);
-  };
-  // sets the "displayTransactions" state to false
-  const handleViewAccountsClick = () => {
-    setDisplayTransactions(false);
+    setSelectedButton(1)
   };
 
-  return apiData && !displayTransactions ? (
-    // <div>
-    //   <h1>Accounts</h1>
-    //   {apiData.map(account => (
-    //     <div key={account.id}>
-    //       <p>ID: {account.id}</p>
-    //       <p>Account Number: {account.account_number}</p>
-    //       <p>Current Balance: {account.current_balance}</p>
-    //       {/* <button onClick={() => handleTransactionClick(account.id)}>View Transactions</button> */}
-    //       <button key={account.id} onClick={() => handleTransactionClick(account.id)}>
-    //         Account {account.id}
-    //       </button>
-    //     </div>
-    //   ))}
-    // </div>
-    
-    // test
+  const [selectedButton, setSelectedButton] = useState(null);
+  // sets the "displayTransactions" state to false
+  const handleViewAccountsClick = (buttonIndex) => {
+    setDisplayTransactions(false);
+    setSelectedButton(0);
+  };
+
+  return apiData && !displayTransactions ? (    
     <div>
   <Container maxWidth="md" component="main">
     <div>
@@ -58,11 +46,7 @@ const Account = ({ apiData }) => {
               px: [1],
             }}
           >
-            {/* <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton> */}
           </Toolbar>
-          {/* <Divider /> */}
           <List component="nav">
           <ListItemButton 
             selected
@@ -89,7 +73,6 @@ const Account = ({ apiData }) => {
             item
             key={account.id}
             xs={12}
-            // sm={account.account_number === 'Enterprise' ? 12 : 6}
             md={4}
           >
             <Card>
@@ -117,10 +100,9 @@ const Account = ({ apiData }) => {
     </div>
   </Container>
 </div>
-// end test
 
   ) : displayTransactions ? (
-    <Transaction accountNumber={accountNumber} onViewAccountsClick={handleViewAccountsClick} />
+    <Transaction accountNumber={accountNumber} onViewAccountsClick={handleViewAccountsClick} selectedButton={selectedButton}/>
   ) : null;
 };
 
