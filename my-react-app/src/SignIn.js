@@ -42,6 +42,7 @@ export default function SignIn() {
     const [formData, setFormData] = useState({ username: '', password: '' });
     const [apiData, setApiData] = useState(null);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [user, setUser] = useState(null);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -60,13 +61,14 @@ export default function SignIn() {
         console.log('API Data from Test1:', data);
         setApiData(data);
         setIsSubmitted(true);
+        setUser(formData.username);
         } else {
         console.error('Error:', response.statusText);
         }
     };
 
     if (isSubmitted) {
-        return <Account apiData={apiData} />;
+        return <Account apiData={apiData} user={user}/>;
       }
 
   return (

@@ -13,7 +13,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 
 // a functional component that takes in an object containing the "apiData" prop as an argument.
-const Account = ({ apiData }) => {
+const Account = ({ user, apiData }) => {
   // Declares a state variable named "accountNumber" and its corresponding state update function "setAccountNumber" using the useState hook
   const [accountNumber, setAccountNumber] = useState(null);
   // Declares a state variable named "displayTransactions" and its corresponding state update function "setDisplayTransactions" using the useState hook.
@@ -33,7 +33,7 @@ const Account = ({ apiData }) => {
     setSelectedButton(0);
   };
 
-  return apiData && !displayTransactions ? (    
+  return user && apiData && !displayTransactions ? (    
     // <div>
   <Container maxWidth="md" component="main">
     <div>
@@ -48,7 +48,7 @@ const Account = ({ apiData }) => {
           >
           </Toolbar>
           <List component="nav">
-            <h1 aligh = 'center'>Hi, </h1>
+            <h1 aligh = 'center'>Hi,{user}</h1>
             <ListItemButton 
               selected
               sx = {{
@@ -101,7 +101,9 @@ const Account = ({ apiData }) => {
 // </div>
 
   ) : displayTransactions ? (
-    <Transaction accountNumber={accountNumber} onViewAccountsClick={handleViewAccountsClick} selectedButton={selectedButton}/>
+    <Transaction accountNumber={accountNumber} onViewAccountsClick={handleViewAccountsClick} 
+    selectedButton={selectedButton}
+    user = {user}/>
   ) : null;
 };
 

@@ -7,6 +7,7 @@ const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [apiData, setApiData] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [user, setUser] = useState(null);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -22,18 +23,18 @@ const Login = () => {
     });
     if (response.ok) {
       const data = await response.json();
-      console.log('API Data from Test1:', data);
+      console.log('API Data from Login:', data);
       setApiData(data);
       setIsSubmitted(true);
+      console.log('formData.username:', formData.username);
+      setUser(formData.username);
     } else {
       console.error('Error:', response.statusText);
     }
   };
 
   if (isSubmitted) {
-    // test
-    // return <Pricings apiData={apiData} />;
-    return <Account apiData={apiData} />;
+    return <Account apiData={apiData} user={user}/>;
   }
 
   return (

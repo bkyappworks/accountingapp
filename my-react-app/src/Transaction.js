@@ -16,7 +16,7 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 
-const Transaction = ({ accountNumber, onViewAccountsClick, selectedButton}) => {
+const Transaction = ({ accountNumber, onViewAccountsClick, selectedButton, user}) => {
   const [transactions, setTransactions] = useState([]);
   // useEffect hook is called after the first render and every time accountNumber changes. 
   // It contains an asynchronous function that fetches the transaction data from a local server using the account number as a query parameter.
@@ -28,6 +28,7 @@ const Transaction = ({ accountNumber, onViewAccountsClick, selectedButton}) => {
     }
     fetchData();
   }, [accountNumber]); // To ensures that the effect is only triggered when the accountNumber prop changes.
+  console.log('user:', user);
 
   return (
     <div>
@@ -45,7 +46,7 @@ const Transaction = ({ accountNumber, onViewAccountsClick, selectedButton}) => {
           </Toolbar>
           
           <List component="nav">
-            <h1 aligh = 'center'>Hi, </h1>
+            <h1 aligh = 'center'>Hi, {user ? user : 'User not found'}</h1>
             <ListItemButton 
               onClick={() => onViewAccountsClick(0)}
               sx={{
