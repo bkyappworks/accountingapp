@@ -34,7 +34,7 @@ const Account = ({ apiData }) => {
   };
 
   return apiData && !displayTransactions ? (    
-    <div>
+    // <div>
   <Container maxWidth="md" component="main">
     <div>
     <Drawer variant="permanent">
@@ -48,25 +48,25 @@ const Account = ({ apiData }) => {
           >
           </Toolbar>
           <List component="nav">
-          <ListItemButton 
-            selected
+            <h1 aligh = 'center'>Hi, </h1>
+            <ListItemButton 
+              selected
+              sx = {{
+                backgroundColor: 'royalblue',
+                borderRadius: '10px'
+              }}>
+              <ListItemText primary="View Accounts" aligh="center"/>
+            </ListItemButton>
+            <Divider sx={{ my: 1 }} />
+            <ListItemButton 
             sx = {{
-              backgroundColor: 'royalblue',
+              backgroundColor: 'gainsboro',
               borderRadius: '10px'
             }}>
-            <ListItemText primary="View Accounts" aligh="center"/>
-          </ListItemButton>
-          <Divider sx={{ my: 1 }} />
-          <ListItemButton 
-          sx = {{
-            backgroundColor: 'gainsboro',
-            borderRadius: '10px'
-          }}>
-            <ListItemText primary="View Transactions" aligh="center"/>
-          </ListItemButton>
+              <ListItemText primary="View Transactions" aligh="center"/>
+            </ListItemButton>
           </List>
         </Drawer>
-      {/* <h1>Accounts</h1> */}
       <Grid container spacing={5} alignItems="flex-end">
         {apiData.map(account => (
           <Grid
@@ -82,7 +82,6 @@ const Account = ({ apiData }) => {
             <CardContent>
               <div key={account.id}>
                 <h2>Account Number</h2>
-                {/* <p>{account.user}</p> */}
                 <p>{account.account_number}</p>
                 <p>Current Balance</p>
                 <p align= 'right'> ${account.current_balance} </p>
@@ -99,7 +98,7 @@ const Account = ({ apiData }) => {
       </Grid>
     </div>
   </Container>
-</div>
+// </div>
 
   ) : displayTransactions ? (
     <Transaction accountNumber={accountNumber} onViewAccountsClick={handleViewAccountsClick} selectedButton={selectedButton}/>

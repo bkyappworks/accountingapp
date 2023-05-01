@@ -45,58 +45,58 @@ const Transaction = ({ accountNumber, onViewAccountsClick, selectedButton}) => {
           </Toolbar>
           
           <List component="nav">
-          <ListItemButton 
-            onClick={() => onViewAccountsClick(0)}
-            sx={{
-              backgroundColor: selectedButton === 0 ? 'royalblue' : 'gainsboro',
-              borderRadius: '10px'
-            }}
+            <h1 aligh = 'center'>Hi, </h1>
+            <ListItemButton 
+              onClick={() => onViewAccountsClick(0)}
+              sx={{
+                backgroundColor: selectedButton === 0 ? 'royalblue' : 'gainsboro',
+                borderRadius: '10px'
+              }}
+              >
+              <ListItemText primary="View Accounts" aligh="center"/>
+            </ListItemButton>
+            <Divider sx={{ my: 1 }} />
+            <ListItemButton 
+            onClick={() => onViewAccountsClick(1)}
+              sx={{
+                backgroundColor: selectedButton === 1 ? 'royalblue' : 'gainsboro',
+                borderRadius: '10px'
+              }}
             >
-            <ListItemText primary="View Accounts" aligh="center"/>
-          </ListItemButton>
-          <Divider sx={{ my: 1 }} />
-          <ListItemButton 
-          onClick={() => onViewAccountsClick(1)}
-            sx={{
-              backgroundColor: selectedButton === 1 ? 'royalblue' : 'gainsboro',
-              borderRadius: '10px'
-            }}
-          >
-            <ListItemText primary="View Transactions" aligh="center"/>
-          </ListItemButton>
+              <ListItemText primary="View Transactions" aligh="center"/>
+            </ListItemButton>
           </List>
 
       </Drawer>
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      {/* <h1>Transaction </h1> */}
-      <Grid item xs={12}>
-      <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>      
-      <React.Fragment>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Date</TableCell>
-            <TableCell>Transaction Type</TableCell>
-            <TableCell>Note</TableCell>
-            <TableCell>Amount</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {transactions.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.id}</TableCell>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.transaction_type}</TableCell>
-              <TableCell>{row.note}</TableCell>
-              <TableCell>{`$${row.amount}`}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      </React.Fragment>
-      </Paper>
-      </Grid>
+        <Grid item xs={12}>
+          <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>      
+            <React.Fragment>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>ID</TableCell>
+                    <TableCell>Date</TableCell>
+                    <TableCell>Transaction Type</TableCell>
+                    <TableCell>Note</TableCell>
+                    <TableCell>Amount</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {transactions.map((row) => (
+                    <TableRow key={row.id}>
+                      <TableCell>{row.id}</TableCell>
+                      <TableCell>{row.date}</TableCell>
+                      <TableCell>{row.transaction_type}</TableCell>
+                      <TableCell>{row.note}</TableCell>
+                      <TableCell>{`$${row.amount}`}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </React.Fragment>
+          </Paper>
+        </Grid>
       </Container>
       </Box>
     </div>
