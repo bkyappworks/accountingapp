@@ -10,6 +10,7 @@ import List from '@mui/material/List';
 import Drawer from '@mui/material/Drawer';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
 
 // a functional component that takes in an object containing the "apiData" prop as an argument.
 const Account = ({ apiData }) => {
@@ -64,19 +65,24 @@ const Account = ({ apiData }) => {
           {/* <Divider /> */}
           <List component="nav">
           <ListItemButton 
+            selected
             sx = {{
-              border: '1px solid black'
+              backgroundColor: 'royalblue',
+              borderRadius: '10px'
             }}>
-            <ListItemText primary="View Accounts" />
+            <ListItemText primary="View Accounts" aligh="center"/>
           </ListItemButton>
-          <ListItemButton sx = {{
-              border: '1px solid black'
-            }}>
-            <ListItemText primary="View Transactions" />
+          <Divider sx={{ my: 1 }} />
+          <ListItemButton 
+          sx = {{
+            backgroundColor: 'gainsboro',
+            borderRadius: '10px'
+          }}>
+            <ListItemText primary="View Transactions" aligh="center"/>
           </ListItemButton>
           </List>
         </Drawer>
-      <h1>Accounts</h1>
+      {/* <h1>Accounts</h1> */}
       <Grid container spacing={5} alignItems="flex-end">
         {apiData.map(account => (
           <Grid
